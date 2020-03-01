@@ -68,12 +68,20 @@ module Shards
       parser.close if parser
     end
 
-    getter! name : String?
-    getter! version : String?
+    property! name : String?
+    property! version : String?
     getter description : String?
     getter license : String?
     getter crystal : String?
     property resolver : Resolver?
+
+    getter authors : Array(Author) { [] of Author }
+    getter dependencies : Array(Dependency) { [] of Dependency }
+    getter development_dependencies : Array(Dependency) { [] of Dependency }
+    getter targets : Array(Target) { [] of Target }
+    getter executables : Array(String) { [] of String }
+    getter libraries : Array(Library) { [] of Library }
+    getter scripts : Hash(String, String) { {} of String => String }
 
     # :nodoc:
     def initialize(pull : YAML::PullParser, validate = false)
@@ -133,40 +141,6 @@ module Shards
           pull.raise "missing required attribute: {{ attr.id }}"
         end
       {% end %}
-    end
-
-    def name=(@name : String)
-    end
-
-    def version=(@version : String)
-    end
-
-    def authors
-      @authors ||= [] of Author
-    end
-
-    def dependencies
-      @dependencies ||= [] of Dependency
-    end
-
-    def development_dependencies
-      @development_dependencies ||= [] of Dependency
-    end
-
-    def targets
-      @targets ||= [] of Target
-    end
-
-    def executables
-      @executables ||= [] of String
-    end
-
-    def libraries
-      @libraries ||= [] of Library
-    end
-
-    def scripts
-      @scripts ||= {} of String => String
     end
 
     def license_url

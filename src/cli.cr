@@ -10,6 +10,7 @@ module Shards
           build [<targets>] [<options>]  - Build the specified <targets> in `bin` path.
           check                          - Verify all dependencies are installed.
           init                           - Initialize a `shard.yml` file.
+          add                            - Add a new dependency to the `shard.yml`
           install                        - Install dependencies, creating or using the `shard.lock` file.
           list [--tree]                  - List installed dependencies.
           lock [--update] [<shards>]     - Lock dependencies in `shard.lock` but doesn't install them.
@@ -66,6 +67,7 @@ module Shards
           )
         when "version"
           Commands::Version.run(args[1]? || path)
+        when "add" then Commands::Add.run path
         else
           display_help_and_exit(opts)
         end
